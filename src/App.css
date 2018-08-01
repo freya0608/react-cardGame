@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.chunkImg{
+  width: 75%;
+  margin: 10px;
+}
+.imgBlock{
+  width: 25%;
+  display: inline-block;
+}
+.is-inverse{
+  background-color: #555;
+  transform: rotateY(180deg);
+}
+.img-figure {
+  position: absolute;
+  width: 320px;
+  height: 360px;
+  margin: 0;
+  padding: 40px;
+  box-sizing: border-box;
+  background: #fff;
+  cursor: pointer;
+  transform-origin: 0 50% 0;
+  transform-style: preserve-3d;
+  transition: transform .6s ease-in, left .6s ease-in-out, top .6s ease-in-out;
+}
+.img-figure .is-inverse {
+   transform: translate(320px) rotateY(180deg);
+ }
+figcaption .img-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 50px 40px;
+  overflow:auto;
+  color: #a7a0a2;
+  font-size: 22px;
+  line-height: 1.25;
+  text-align: left;
+  background-color: #fff;
+
+  box-sizing: border-box;
+  transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;
+ -webkit-backface-visibility: hidden;
+
+}
+figcaption .img-back p {
+  margin: 0;
+}
+
+
+
+
+
+
