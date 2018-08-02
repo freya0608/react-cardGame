@@ -49,7 +49,20 @@ class ImgFigure extends React.Component {
     }
 }
 
+function countSame(index,item,first,count){
+    console.log(item)
+    console.log('first',first)
+    console.log('conut',count);
+    if(first===0){
+        console.log('初始化')
+    }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
+        console.log('恭喜您，点对了')
+    }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
+        console.log('点错了,让这错的图片自动翻转');
+        
+    }
 
+}
 
 //
 class App extends React.Component {
@@ -57,18 +70,24 @@ class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            imgsArrangeArr: []
+            imgsArrangeArr: [],
+            first:0,
+            second:0,
+            count:1
         }
     }
-
-    inverse(index) {
+    inverse(index,item) {
         return function() {
             var imgsArrangeArr = this.state.imgsArrangeArr;
             imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
             //更新视图
             this.setState({
-                imgsArrangeArr: imgsArrangeArr
-            })
+                imgsArrangeArr: imgsArrangeArr,
+                first:parseInt(item.fileName.replace(".jpg","")),
+                count:this.state.count+1
+            });
+
+            countSame(index,item,this.state.first,this.state.count);
         }.bind(this);
     }
 
@@ -86,7 +105,7 @@ class App extends React.Component {
                 <ImgFigure
                     imgData={item}
                     index={index}
-                    inverse={this.inverse(index)}
+                    inverse={this.inverse(index,item)}
                     arrange={this.state.imgsArrangeArr[index]}
                     ref={'imgFigure' + index}
                     key = {index}/>)
