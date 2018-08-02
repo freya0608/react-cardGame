@@ -38,7 +38,6 @@ figure{
 }
 .img-figure.is-inverse {
    transform: translate(100%) rotateY(180deg);
-    background: #666;
  }
 figcaption{
     display: inline-block;
@@ -47,15 +46,14 @@ figcaption .img-back {
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
   overflow:auto;
-  color: #a7a0a2;
-  font-size: 22px;
   line-height: 1.25;
   text-align: left;
   background-color: #fff;
 
   box-sizing: border-box;
-  transform: rotateY(180deg) translateZ(1px);
+  transform: rotateY(180deg) translateZ(0px);
   backface-visibility: hidden;//隐藏被旋转元素的背面
   -webkit-backface-visibility: hidden;
 

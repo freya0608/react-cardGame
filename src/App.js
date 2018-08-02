@@ -27,9 +27,9 @@ class ImgFigure extends React.Component {
         e.stopPropagation();
     }
 
+
     render() {
        const {imgData, index} = this.props;
-       console.log(this.props);
         var imgFigureClassName = 'img-figure';
         imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';
 
@@ -79,7 +79,7 @@ class App extends React.Component {
             if(!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index] = {
                     rotate: 0,
-                    isInverse: false,
+                    isInverse: true,
                 }
             }
             imgFigures.push(
