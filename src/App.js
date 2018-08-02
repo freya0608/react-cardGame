@@ -95,9 +95,12 @@ class App extends React.Component {
         }.bind(this));
 
         return (
-            <section className="img-sec">
-                {imgFigures}
+            <section className="stage">
+                <section className="img-sec">
+                    {imgFigures}
+                </section>
             </section>
+
 
         )
     }
