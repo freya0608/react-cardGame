@@ -27,7 +27,6 @@ class ImgFigure extends React.Component {
         e.stopPropagation();
     }
 
-
     render() {
        const {imgData, index} = this.props;
         var imgFigureClassName = 'img-figure';
@@ -49,22 +48,7 @@ class ImgFigure extends React.Component {
     }
 }
 
-function countSame(index,item,first,count){
-    console.log(item)
-    console.log('first',first)
-    console.log('conut',count);
-    if(first===0){
-        console.log('初始化')
-    }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
-        console.log('恭喜您，点对了')
-    }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
-        console.log('点错了,让这错的图片自动翻转');
-        
-    }
 
-}
-
-//
 class App extends React.Component {
 
     constructor(props){
@@ -76,6 +60,28 @@ class App extends React.Component {
             count:1
         }
     }
+    countSame(index,item,first,count){
+        console.log(item)
+        console.log('index',index);
+        console.log('first',first)
+        console.log('conut',count);
+            if(first===0){
+                console.log('初始化')
+            }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
+                console.log('恭喜您，点对了')
+            }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
+                console.log('点错了,让这错的图片自动翻转');
+                this.state.count = 1;
+                this.state.first =  0;
+                var imgsArrangeArr = this.state.imgsArrangeArr;
+                setTimeout(function () {
+                    imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+                    imgsArrangeArr[first].isInverse = true;
+                },1000)
+
+            }
+    }
+
     inverse(index,item) {
         return function() {
             var imgsArrangeArr = this.state.imgsArrangeArr;
@@ -87,7 +93,7 @@ class App extends React.Component {
                 count:this.state.count+1
             });
 
-            countSame(index,item,this.state.first,this.state.count);
+            this.countSame(index,item,this.state.first,this.state.count);
         }.bind(this);
     }
 
@@ -118,8 +124,6 @@ class App extends React.Component {
                     {imgFigures}
                 </section>
             </section>
-
-
         )
     }
 
