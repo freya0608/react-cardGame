@@ -14,8 +14,6 @@ function getImgURL(imgDateArray) {
 
 var urls = getImgURL(imgDatas);
 
-
-
 //图片组件
 class ImgFigure extends React.Component {
 
@@ -96,6 +94,7 @@ class App extends React.Component {
 
         return (
             <section className="stage">
+                <section className="">进度条</section>
                 <section className="img-sec">
                     {imgFigures}
                 </section>
