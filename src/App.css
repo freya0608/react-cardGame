@@ -40,11 +40,9 @@
   transform: rotateY(180deg);
 }
 .img-figure {
-  position: absolute;
-  width: 320px;
-  height: 360px;
+  width: 25%;
+  height: 25%;
   margin: 0;
-  padding: 40px;
   box-sizing: border-box;
   background: #fff;
   cursor: pointer;
@@ -52,14 +50,24 @@
   transform-style: preserve-3d;
   transition: transform .6s ease-in, left .6s ease-in-out, top .6s ease-in-out;
 }
-.img-figure .is-inverse {
+
+
+.img-figure img{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+.img-figure.is-inverse {
    transform: translate(320px) rotateY(180deg);
+    background: #666;
  }
+figcaption{
+    display: inline-block;
+}
 figcaption .img-back {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 50px 40px;
   overflow:auto;
   color: #a7a0a2;
   font-size: 22px;
@@ -69,6 +77,8 @@ figcaption .img-back {
 
   box-sizing: border-box;
   transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;//隐藏被旋转元素的背面
+  -webkit-backface-visibility: hidden;
 
 
 }

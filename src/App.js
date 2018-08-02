@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import back from './back.jpg'
 let imgDatas = require('./imageDatas');
 
 function getImgURL(imgDateArray) {
@@ -39,9 +39,8 @@ class ImgFigure extends React.Component {
             <figure  className={imgFigureClassName}  onClick={this.handleClick}>
                 <img onClick={this.handleClick} src={imgData.imageURL} alt={imgData.title}/>
                 <figcaption>
-                    <h2>{imgData.title}</h2>
                     <div className="img-back" onClick={this.handleClick}>
-                        <p>{imgData.desc}</p>
+                        <img src={back}/>
                     </div>
                 </figcaption>
 
@@ -96,9 +95,9 @@ class App extends React.Component {
         }.bind(this));
 
         return (
-            <div>
+            <section className="img-sec">
                 {imgFigures}
-            </div>
+            </section>
 
         )
     }
