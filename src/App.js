@@ -77,8 +77,7 @@ class App extends React.Component {
                 setTimeout(function () {
                     imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
                     imgsArrangeArr[first].isInverse = true;
-                },1000)
-
+                },500)
             }
     }
 

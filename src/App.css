@@ -54,7 +54,7 @@ figcaption .img-back {
 
   box-sizing: border-box;
   transform: rotateY(180deg) translateZ(0px);
-  backface-visibility: hidden;//隐藏被旋转元素的背面
+  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 
 }
