@@ -14,6 +14,8 @@ function getImgURL(imgDateArray) {
 
 var urls = getImgURL(imgDatas);
 
+
+
 //图片组件
 class ImgFigure extends React.Component {
 
@@ -25,26 +27,25 @@ class ImgFigure extends React.Component {
         this.props.inverse();
         e.preventDefault();
         e.stopPropagation();
-
     }
 
     render() {
-
-       const {imgData, index,inverse} = this.props;
-
-       console.log(inverse)
+       const {imgData, index} = this.props;
+       console.log(this.props);
         var imgFigureClassName = 'img-figure';
         imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';
 
         return (
-            <figure className={imgFigureClassName} onClick={this.handleClick} >
-                <img src={imgData.imageURL} alt={imgData.title}/>
+            <figure  className={imgFigureClassName}  onClick={this.handleClick}>
+                <img onClick={this.handleClick} src={imgData.imageURL} alt={imgData.title}/>
                 <figcaption>
                     <h2>{imgData.title}</h2>
                     <div className="img-back" onClick={this.handleClick}>
                         <p>{imgData.desc}</p>
                     </div>
                 </figcaption>
+
+
             </figure>
 
         );
@@ -60,41 +61,39 @@ class App extends React.Component {
         super(props);
         this.state = {
             imgsArrangeArr: []
-        };
-        this.inverse = this.inverse.bind(this);
+        }
     }
 
     inverse(index) {
-        console.log('index',index);
         return function() {
             var imgsArrangeArr = this.state.imgsArrangeArr;
             imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+            //更新视图
             this.setState({
                 imgsArrangeArr: imgsArrangeArr
             })
         }.bind(this);
     }
 
-
-
     render(){
         var imgFigures = [];
-        urls.map((item,index)=>{
+
+        urls.forEach(function(item,index){
             if(!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index] = {
                     rotate: 0,
                     isInverse: false,
                 }
             }
-
             imgFigures.push(
                 <ImgFigure
                     imgData={item}
                     index={index}
                     inverse={this.inverse(index)}
+                    arrange={this.state.imgsArrangeArr[index]}
                     ref={'imgFigure' + index}
                     key = {index}/>)
-        });
+        }.bind(this));
 
         return (
             <div>
