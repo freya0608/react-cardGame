@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 //import {TweenMax} from "gsap";
 //import PropTypes from 'prop-types';
 
-class extends React.Component
+class name extends React.Component
 {
     static
     defaultProps = {
