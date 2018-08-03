@@ -47,8 +47,8 @@ figcaption .img-back {
   top: 0;
   left: 0;
   height: 100%;
-  overflow:auto;
-  line-height: 1.25;
+  overflow:overlay;
+  line-height: 1;
   text-align: left;
   background-color: #fff;
 
@@ -74,7 +74,7 @@ figcaption .img-back p {
   width:300px;
 }
 .layer{
-  
+
 }
 
 

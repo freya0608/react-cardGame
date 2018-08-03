@@ -74,8 +74,10 @@ class App extends React.Component {
                 console.log('恭喜您，点对了')
             }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
                 console.log('点错了,让这错的图片自动翻转');
-                this.state.count = 1;
-                this.state.first =  0;
+                this.setState({
+                    count:1,
+                    first:0
+                });
                 var imgsArrangeArr = this.state.imgsArrangeArr;
                 setTimeout(function () {
                     imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
@@ -151,6 +153,13 @@ class App extends React.Component {
                     {imgFigures}
                 </section>
                 <section className="layer">
+                    <div className="layer-outer">
+                        <div className="layer-inner">
+                            <div className="layer-content">
+                                时间到了
+                            </div>
+                        </div>
+                    </div>
 
 
                 </section>
