@@ -59,10 +59,11 @@ class App extends React.Component {
             count:1,
             percent:0,
             layer:false
-        }
+        };
         this.timer = null;
         this.gameOver = this.gameOver.bind(this);
         this.layer  = this.layer.bind(this);
+        this.wantToSee = this.wantToSee.bind(this);
     }
     countSame(index,item,first,count){
         console.log(item)
@@ -97,7 +98,6 @@ class App extends React.Component {
                 first:parseInt(item.fileName.replace(".jpg","")),
                 count:this.state.count+1
             });
-
             this.countSame(index,item,this.state.first,this.state.count);
         }.bind(this);
     }
@@ -129,7 +129,28 @@ class App extends React.Component {
     layer(){
         this.setState({
             layer:false
-        })
+        });
+        //时间到了之后，将所有的卡片翻转到背面
+        var imgsArrangeArr = this.state.imgsArrangeArr;
+        for(var i=0;i<this.state.imgsArrangeArr.length;i++){
+            imgsArrangeArr[i].isInverse = true;
+        }
+    }
+
+    //偷看
+    wantToSee(){
+        //时间到了之后，将所有的卡片翻转到背面
+        console.log('wangtosee',this.state)
+        var imgsArrangeArr = this.state.imgsArrangeArr;
+        for(var i=0;i<this.state.imgsArrangeArr.length;i++){
+            imgsArrangeArr[i].isInverse = false;
+        }
+        setTimeout(function () {
+            console.log('setTimeout',imgsArrangeArr)
+            for(var i=0;i<imgsArrangeArr.length;i++){
+                imgsArrangeArr[i].isInverse = true;
+            }
+        },2000)
     }
 
 
@@ -180,6 +201,10 @@ class App extends React.Component {
                         </div>
                     </section>
                 }
+
+                <div>
+                    <button onClick={this.wantToSee}>偷看</button>
+                </div>
 
             </div>
 
