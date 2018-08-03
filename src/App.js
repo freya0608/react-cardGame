@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import back from './back.jpg'
 import {Line} from 'rc-progress'
-
 let imgDatas = require('./imageDatas');
 
 function getImgURL(imgDateArray) {
@@ -59,9 +58,11 @@ class App extends React.Component {
             second:0,
             count:1,
             percent:0,
+            layer:false
         }
         this.timer = null;
-        this.gameOver = this.gameOver.bind(this)
+        this.gameOver = this.gameOver.bind(this);
+        this.layer  = this.layer.bind(this);
     }
     countSame(index,item,first,count){
         console.log(item)
@@ -106,6 +107,9 @@ class App extends React.Component {
         console.log(time)
         if(this.state.percent===100){
             clearInterval(this.timer);
+            this.setState({
+                layer:true
+            });
             return
         }
         this.setState({
@@ -120,6 +124,12 @@ class App extends React.Component {
     }
     componentWillUnmount(){
         clearInterval(this.timer);
+    }
+
+    layer(){
+        this.setState({
+            layer:false
+        })
     }
 
 
@@ -142,28 +152,38 @@ class App extends React.Component {
                     ref={'imgFigure' + index}
                     key = {index}/>)
         }.bind(this));
-
+        
         return (
-            <section className="stage">
-                <section className="progress">
-                    <div>剩余时间</div>
-                    <Line percent={this.state.percent} strokeWidth="3" strokeColor="red" />
+            <div>
+                <section className="stage">
+                    <section className="progress">
+                        <div className="progress-text">剩余时间</div>
+                        <div className="progress-bar">
+                            <Line percent={this.state.percent} strokeWidth="2" strokeColor="red" />
+                        </div>
+                    </section>
+                    <section className="img-sec">
+                        {imgFigures}
+                    </section>
+
                 </section>
-                <section className="img-sec">
-                    {imgFigures}
-                </section>
-                <section className="layer">
-                    <div className="layer-outer">
-                        <div className="layer-inner">
-                            <div className="layer-content">
-                                时间到了
+                {
+                    this.state.layer &&
+                    <section className="layer">
+                        <div className="layer-outer">
+                            <div className="layer-inner">
+                                <div className="layer-content">
+                                    时间到了
+                                </div>
+                                <button onClick={this.layer}>OK</button>
                             </div>
                         </div>
-                    </div>
+                    </section>
+                }
+
+            </div>
 
 
-                </section>
-            </section>
         )
     }
 

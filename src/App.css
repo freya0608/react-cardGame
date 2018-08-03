@@ -61,11 +61,15 @@ figcaption .img-back {
 figcaption .img-back p {
   margin: 0;
 }
+.progress-text{
+  color: #333;
+  height: 30px;
+  line-height: 30px;
+  margin:10px ;
+}
 .progress-bar{
   margin: 10px 20px;
   width: 300px;
-  border:2px solid bisque;
-  border-radius: 10px;
 }
 .progress-content{
   height:20px;
@@ -74,7 +78,30 @@ figcaption .img-back p {
   width:300px;
 }
 .layer{
-
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  opacity: 0.5;
+  background: #999;
+  top: 0;
+  text-align: center;
+}
+.layer-outer{
+  position: relative;
+  height: 100%;
+}
+.layer-inner{
+  position: absolute;
+  margin:auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  height: 150px;
+  color: black;
+  background: purple;
+  border-radius: 10px;
 }
 
 
