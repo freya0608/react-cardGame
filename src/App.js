@@ -182,6 +182,9 @@ class App extends React.Component {
             if(!randomUrls[random]){
                 randomUrls.push(_urls[i]);
             }
+            if(!randomUrls[random]){
+                randomUrls.push(_urls[i]);
+            }
         }
 
         randomUrls.forEach(function(item,index){
