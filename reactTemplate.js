@@ -8,15 +8,13 @@ import React, {Component} from 'react';
 //import {TweenMax} from "gsap";
 //import PropTypes from 'prop-types';
 
-class name extends React.Component
-{
-    static
-    defaultProps = {
+class reactTemplate extends React.Component {
+    static defaultProps = {
         ...Component.defaultProps
     }
     static propTypes = {}
-    constructor(props)
-    {
+
+    constructor(props) {
         super(props)
         this.state = {}
         this.dom = React.createRef()
@@ -24,13 +22,14 @@ class name extends React.Component
         //事件绑定在es6中用于自定义事件props事件不适用
         //this.handleClick = this.handleClick.bind(this);
     }
+
     //组件将要装载
     //componentWillMount(){}
     //组件加载完毕
-    componentDidMount()
-    {
+    componentDidMount() {
         //this.dom.root=ReactDOM.findDOMNode(this);
     }
+
     //组件将接收道具
     //componentWillReceiveProps(nextProps){}
     //shouldComponentUpdate(nextProps, nextState) {}
@@ -48,12 +47,11 @@ class name extends React.Component
     //componentDidEnter(){}
     //componentWillLeave(callback){}
     //componentDidLeave(){}
-    render()
-    {
+    render() {
         return (
             <div ref={this.dom}></div>
         );
     }
 }
 
-export default 8;
+export default reactTemplate;
