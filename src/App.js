@@ -66,7 +66,7 @@ class App extends React.Component {
     countSame(index,item,first,count){
         console.log(item)
         console.log('index',index);
-        console.log('first',first)
+        console.log('first',first);
         console.log('conut',count);
             if(first===0&&count===1){
                 console.log('初始化')
@@ -149,6 +149,10 @@ class App extends React.Component {
                 </section>
                 <section className="img-sec">
                     {imgFigures}
+                </section>
+                <section className="layer">
+
+
                 </section>
             </section>
         )
