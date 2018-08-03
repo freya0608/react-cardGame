@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import back from './back.jpg'
+import {Line} from 'rc-progress'
+
 let imgDatas = require('./imageDatas');
 
 function getImgURL(imgDateArray) {
@@ -11,7 +13,7 @@ function getImgURL(imgDateArray) {
     }
     return imgDateArray;
 }
-
+var time=0;
 var urls = getImgURL(imgDatas);
 
 //图片组件
@@ -40,8 +42,6 @@ class ImgFigure extends React.Component {
                         <img src={back}/>
                     </div>
                 </figcaption>
-
-
             </figure>
 
         );
@@ -57,15 +57,18 @@ class App extends React.Component {
             imgsArrangeArr: [],
             first:0,
             second:0,
-            count:1
+            count:1,
+            percent:0,
         }
+        this.timer = null;
+        this.gameOver = this.gameOver.bind(this)
     }
     countSame(index,item,first,count){
         console.log(item)
         console.log('index',index);
         console.log('first',first)
         console.log('conut',count);
-            if(first===0){
+            if(first===0&&count===1){
                 console.log('初始化')
             }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
                 console.log('恭喜您，点对了')
@@ -77,7 +80,7 @@ class App extends React.Component {
                 setTimeout(function () {
                     imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
                     imgsArrangeArr[first].isInverse = true;
-                },500)
+                },300)
             }
     }
 
@@ -95,6 +98,28 @@ class App extends React.Component {
             this.countSame(index,item,this.state.first,this.state.count);
         }.bind(this);
     }
+
+    gameOver(){
+        time += 2.5;
+        console.log(time)
+        if(this.state.percent===100){
+            clearInterval(this.timer);
+            return
+        }
+        this.setState({
+            percent:time,
+        });
+    }
+    componentDidMount(){
+        this.timer = setInterval(
+            ()=> this.gameOver(),
+            1000
+        )
+    }
+    componentWillUnmount(){
+        clearInterval(this.timer);
+    }
+
 
     render(){
         var imgFigures = [];
@@ -118,7 +143,10 @@ class App extends React.Component {
 
         return (
             <section className="stage">
-                <section className="">进度条</section>
+                <section className="progress">
+                    <div>剩余时间</div>
+                    <Line percent={this.state.percent} strokeWidth="3" strokeColor="red" />
+                </section>
                 <section className="img-sec">
                     {imgFigures}
                 </section>

@@ -61,6 +61,18 @@ figcaption .img-back {
 figcaption .img-back p {
   margin: 0;
 }
+.progress-bar{
+  margin: 10px 20px;
+  width: 300px;
+  border:2px solid bisque;
+  border-radius: 10px;
+}
+.progress-content{
+  height:20px;
+  border-radius: 10px;
+  background:red;
+  width:300px;
+}
 
 
 
