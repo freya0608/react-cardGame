@@ -132,7 +132,14 @@ class App extends React.Component {
             ()=> this.gameOver(),
             1000
         )
+        //第一局
     }
+
+
+
+    //get start end  over
+
+
     componentWillUnmount(){
         clearInterval(this.timer);
     }
