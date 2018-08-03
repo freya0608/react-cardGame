@@ -103,6 +103,22 @@ figcaption .img-back p {
   background: purple;
   border-radius: 10px;
 }
+.wantToSee{
+  text-align: center;
+  background: white;
+  color:#F36E27;
+  border-radius: 10px;
+  height: 40px;
+  width:80px;
+  font-size: 20px;
+  margin:  10px auto;
+  border:1px solid #F36E27;
+  outline: none;
+}
+.want{
+  margin: 10px auto;
+  text-align: center;
+}
 
 
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import back from './back.jpg'
 import {Line} from 'rc-progress'
+import _every from 'lodash/every'
 let imgDatas = require('./imageDatas');
 
 function getImgURL(imgDateArray) {
@@ -12,7 +13,7 @@ function getImgURL(imgDateArray) {
     }
     return imgDateArray;
 }
-var time=0;
+var time=0,level;
 var urls = getImgURL(imgDatas);
 
 //图片组件
@@ -58,7 +59,8 @@ class App extends React.Component {
             second:0,
             count:1,
             percent:0,
-            layer:false
+            layer:false,
+            level:1
         };
         this.timer = null;
         this.gameOver = this.gameOver.bind(this);
@@ -70,17 +72,26 @@ class App extends React.Component {
         console.log('index',index);
         console.log('first',first);
         console.log('conut',count);
+        var imgsArrangeArr = this.state.imgsArrangeArr;
             if(first===0&&count===1){
                 console.log('初始化')
             }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
                 console.log('恭喜您，点对了')
+
+              var allRight =  _every(imgsArrangeArr,['isInverse',false]);
+                if(allRight){
+                    level +=1;
+                    this.setState({
+                        level:level
+                    })
+                }
+
             }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
                 console.log('点错了,让这错的图片自动翻转');
                 this.setState({
                     count:1,
                     first:0
                 });
-                var imgsArrangeArr = this.state.imgsArrangeArr;
                 setTimeout(function () {
                     imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
                     imgsArrangeArr[first].isInverse = true;
@@ -103,9 +114,9 @@ class App extends React.Component {
     }
 
     gameOver(){
-        time += 2.5;
+        time += 3;
         console.log(time)
-        if(this.state.percent===100){
+        if(this.state.percent>100){
             clearInterval(this.timer);
             this.setState({
                 layer:true
@@ -150,14 +161,30 @@ class App extends React.Component {
             for(var i=0;i<imgsArrangeArr.length;i++){
                 imgsArrangeArr[i].isInverse = true;
             }
-        },2000)
+        },3000)
     }
 
 
     render(){
         var imgFigures = [];
+        var  _urls = [];
+        var randomUrls = [];
 
-        urls.forEach(function(item,index){
+        if(this.state.level===1){
+            _urls = urls.slice(0,4)
+        }else if (this.state.level===2){
+            _urls = urls.slice(0,6)
+        }else if(this.state===3){
+            _urls = urls.slice(0,8);
+        }
+        var random = Math.floor(Math.random()*_urls.length*2);
+        for(var i=0;i<_urls.length;i++){
+            if(!randomUrls[random]){
+                randomUrls.push(_urls[i]);
+            }
+        }
+
+        randomUrls.forEach(function(item,index){
             if(!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index] = {
                     rotate: 0,
@@ -201,9 +228,8 @@ class App extends React.Component {
                         </div>
                     </section>
                 }
-
-                <div>
-                    <button onClick={this.wantToSee}>偷看</button>
+                <div className="want">
+                    <button className="wantToSee"  onClick={this.wantToSee}>偷看</button>
                 </div>
 
             </div>
