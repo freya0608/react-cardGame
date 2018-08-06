@@ -3,7 +3,9 @@ import './App.css';
 import back from './back.jpg'
 import {Line} from 'rc-progress'
 import _every from 'lodash/every'
+import bg from './bg.png'
 let imgDatas = require('./imageDatas');
+
 
 function getImgURL(imgDateArray) {
     for(var i=0;i<imgDateArray.length;i++){
@@ -13,7 +15,7 @@ function getImgURL(imgDateArray) {
     }
     return imgDateArray;
 }
-var time=0,level;
+var time=100,level;
 var urls = getImgURL(imgDatas);
 
 //图片组件
@@ -58,7 +60,7 @@ class App extends React.Component {
             first:0,
             second:0,
             count:1,
-            percent:0,
+            percent:100,
             layer:false,
             level:1
         };
@@ -75,7 +77,7 @@ class App extends React.Component {
         var imgsArrangeArr = this.state.imgsArrangeArr;
             if(first===0&&count===1){
                 console.log('初始化')
-            }else if(parseInt(item.fileName.replace(".jpg",""))===first && count%2===0){
+            }else if(parseInt(item.fileName.replace(/[^0-9]/ig,""))===first && count%2===0){
                 console.log('恭喜您，点对了')
 
               var allRight =  _every(imgsArrangeArr,['isInverse',false]);
@@ -86,7 +88,7 @@ class App extends React.Component {
                     })
                 }
 
-            }else if(parseInt(item.fileName.replace(".jpg",""))!==first && count%2===0) {
+            }else if(parseInt(item.fileName.replace(/[^0-9]/ig,""))!==first && count%2===0) {
                 console.log('点错了,让这错的图片自动翻转');
                 this.setState({
                     count:1,
@@ -106,7 +108,7 @@ class App extends React.Component {
             //更新视图
             this.setState({
                 imgsArrangeArr: imgsArrangeArr,
-                first:parseInt(item.fileName.replace(".jpg","")),
+                first:parseInt(item.fileName.replace(/[^0-9]/ig,"")),
                 count:this.state.count+1
             });
             this.countSame(index,item,this.state.first,this.state.count);
@@ -114,9 +116,9 @@ class App extends React.Component {
     }
 
     gameOver(){
-        time += 3;
+        time -= 50;
         console.log(time)
-        if(this.state.percent>100){
+        if(this.state.percent<0){
             clearInterval(this.timer);
             this.setState({
                 layer:true
@@ -210,9 +212,16 @@ class App extends React.Component {
                     ref={'imgFigure' + index}
                     key = {index}/>)
         }.bind(this));
+
+        var bgStyle = {
+            backgroundImage: `url(${bg})`,
+            width:'100%',
+            height:'100vh',
+            backgroundSize:'contain'
+        };
         
         return (
-            <div>
+            <div style={bgStyle}>
                 <section className="stage">
                     <section className="progress">
                         <div className="progress-text">剩余时间</div>
