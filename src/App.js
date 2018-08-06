@@ -108,7 +108,10 @@ class App extends React.Component {
 
 
     componentWillUpdate(nextProps, nextState){
+        console.log('componentWillUpdate')
         console.log('nextState',nextState);
+        console.log('this.state',this.state)
+        console.log('componentWillUpdate')
 
     }
 
@@ -222,7 +225,9 @@ class App extends React.Component {
     componentWillReceiveProps(nextProps){
         console.log('componentWillReceiveProps')
     }
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, newState) {
+        console.log('this.state',this.state);
+        console.log('nextState',newState)
         console.log('shouldComponentUpdate')
         return true
     }
