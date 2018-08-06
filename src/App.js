@@ -109,7 +109,6 @@ class App extends React.Component {
 
     componentWillUpdate(nextProps, nextState){
         console.log('nextState',nextState);
-        console.log('nextProps',nextProps)
 
     }
 
@@ -173,6 +172,7 @@ class App extends React.Component {
     //get start end  over
 
     componentWillMount(){
+        console.log('componentWillUpdate')
         var  _urls = [];
 
         if(this.state.level===1){
@@ -188,6 +188,8 @@ class App extends React.Component {
     }
 
     componentWillUnmount(){
+        console.log('componentWillUnmount')
+
         clearInterval(this.timer);
     }
 
@@ -215,6 +217,24 @@ class App extends React.Component {
             }
         },3000)
     }
+
+    //组件将接收道具
+    componentWillReceiveProps(nextProps){
+        console.log('componentWillReceiveProps')
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate')
+        return true
+    }
+    //组件将更新
+
+    //组件更新完毕
+    componentDidUpdate(nextProps, nextState){
+        console.log('componentDidUpdate')
+    }
+    //组件将要卸载
+
+
 
 
     render(){
