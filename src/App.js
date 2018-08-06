@@ -70,7 +70,6 @@ class App extends React.Component {
         this.layer  = this.layer.bind(this);
         this.wantToSee = this.wantToSee.bind(this);
         this.spreadImg = this.spreadImg.bind(this);
-        this.random = this.random.bind(this);
     }
     countSame(index,item,first,count){
         console.log(item)
@@ -81,7 +80,7 @@ class App extends React.Component {
             if(first===0&&count===1){
                 console.log('初始化')
             }else if(parseInt(item.fileName.replace(/[^0-9]/ig,""))===first && count%2===0){
-                console.log('恭喜您，点对了')
+                console.log('恭喜您，点对了');
 
               var allRight =  _every(imgsArrangeArr,['isInverse',false]);
                 if(allRight){
@@ -95,13 +94,23 @@ class App extends React.Component {
                 console.log('点错了,让这错的图片自动翻转');
                 this.setState({
                     count:1,
-                    first:0
                 });
                 setTimeout(function () {
-                    imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
-                    imgsArrangeArr[first].isInverse = true;
-                },300)
+                    console.log('点错了index',index);
+                    console.log('点错了first',first)
+                    imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;//刚才点的那张
+                    imgsArrangeArr[first].isInverse = true;//上一张
+                },300);
+
+
             }
+    }
+
+
+    componentWillUpdate(nextProps, nextState){
+        console.log('nextState',nextState);
+        console.log('nextProps',nextProps)
+
     }
 
     inverse(index,item) {
@@ -138,7 +147,14 @@ class App extends React.Component {
             ()=> this.gameOver(),
             1000
         )
+
+
+
         //第一局
+
+
+
+
     }
 
     random(urls){
@@ -146,8 +162,9 @@ class App extends React.Component {
     }
 
     spreadImg(urls) {
+        var whole  = urls.concat(urls);
         this.setState({
-            randomUrls:this.random(urls).concat(this.random(urls))
+            randomUrls:this.random(whole)
         });
     }
 
@@ -188,13 +205,11 @@ class App extends React.Component {
     //偷看
     wantToSee(){
         //时间到了之后，将所有的卡片翻转到背面
-        console.log('wangtosee',this.state)
         var imgsArrangeArr = this.state.imgsArrangeArr;
         for(var i=0;i<this.state.imgsArrangeArr.length;i++){
             imgsArrangeArr[i].isInverse = false;
         }
         setTimeout(function () {
-            console.log('setTimeout',imgsArrangeArr)
             for(var i=0;i<imgsArrangeArr.length;i++){
                 imgsArrangeArr[i].isInverse = true;
             }
