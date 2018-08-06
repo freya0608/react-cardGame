@@ -62,12 +62,15 @@ class App extends React.Component {
             count:1,
             percent:100,
             layer:false,
-            level:1
+            level:1,
+            randomUrls:[],
         };
         this.timer = null;
         this.gameOver = this.gameOver.bind(this);
         this.layer  = this.layer.bind(this);
         this.wantToSee = this.wantToSee.bind(this);
+        this.spreadImg = this.spreadImg.bind(this);
+        this.random = this.random.bind(this);
     }
     countSame(index,item,first,count){
         console.log(item)
@@ -116,9 +119,10 @@ class App extends React.Component {
     }
 
     gameOver(){
-        time -= 50;
+        time -= 2.5;
         console.log(time)
-        if(this.state.percent<0){
+        if(this.state.percent<2.5){
+            this.state.percent = 0;
             clearInterval(this.timer);
             this.setState({
                 layer:true
@@ -137,10 +141,34 @@ class App extends React.Component {
         //第一局
     }
 
+    random(urls){
+        return urls.sort(function (a,b){ return Math.random() >0.5 });
+    }
+
+    spreadImg(urls) {
+        this.setState({
+            randomUrls:this.random(urls).concat(this.random(urls))
+        });
+    }
+
 
 
     //get start end  over
 
+    componentWillMount(){
+        var  _urls = [];
+
+        if(this.state.level===1){
+            _urls = urls.slice(0,4)
+            this.spreadImg(_urls);
+        }else if (this.state.level===2){
+            _urls = urls.slice(0,6);
+            this.spreadImg(_urls);
+        }else if(this.state===3){
+            _urls = urls.slice(0,8);
+            this.spreadImg(_urls);
+        }
+    }
 
     componentWillUnmount(){
         clearInterval(this.timer);
@@ -176,27 +204,7 @@ class App extends React.Component {
 
     render(){
         var imgFigures = [];
-        var  _urls = [];
-        var randomUrls = [];
-
-        if(this.state.level===1){
-            _urls = urls.slice(0,4)
-        }else if (this.state.level===2){
-            _urls = urls.slice(0,6)
-        }else if(this.state===3){
-            _urls = urls.slice(0,8);
-        }
-        var random = Math.floor(Math.random()*_urls.length*2);
-        for(var i=0;i<_urls.length;i++){
-            if(!randomUrls[random]){
-                randomUrls.push(_urls[i]);
-            }
-            if(!randomUrls[random]){
-                randomUrls.push(_urls[i]);
-            }
-        }
-
-        randomUrls.forEach(function(item,index){
+        this.state.randomUrls.forEach(function(item,index){
             if(!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index] = {
                     rotate: 0,

@@ -22,6 +22,7 @@
   height: 100%;
   position:relative;
   overflow:hidden;
+  margin-top: 30px;
  }
 .stage {
   width:100%;
