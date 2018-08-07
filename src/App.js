@@ -57,8 +57,11 @@ class App extends React.Component {
         super(props);
         this.state = {
             imgsArrangeArr: [],
-            first:0,
+            lastIndex:0,
+            index:0,
             second:0,
+            fNode:"",
+            sNode:"",
             count:1,
             percent:100,
             layer:false,
@@ -71,36 +74,51 @@ class App extends React.Component {
         this.wantToSee = this.wantToSee.bind(this);
         this.spreadImg = this.spreadImg.bind(this);
     }
-    countSame(index,item,first,count){
-        console.log(item)
+    countSame(index,item,lastIndex,count){
+        console.log(item);
         console.log('index',index);
-        console.log('first',first);
+        console.log('lastIndex',lastIndex);
         console.log('conut',count);
-        var imgsArrangeArr = this.state.imgsArrangeArr;
-            if(first===0&&count===1){
-                console.log('初始化')
-            }else if(parseInt(item.fileName.replace(/[^0-9]/ig,""))===first && count%2===0){
-                console.log('恭喜您，点对了');
 
-              var allRight =  _every(imgsArrangeArr,['isInverse',false]);
+        this.setState({
+           // index:index,
+           // lastIndex:lastIndex,
+        });
+
+        if(this.state.fNode==''){
+            this.state.fNode = item;
+        }else {
+            this.state.sNode = item
+        }
+        var imgsArrangeArr = this.state.imgsArrangeArr;
+            if(lastIndex===0&&count===1){
+                console.log('初始化')
+            }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0){
+                console.log('恭喜您，点对了');
+                var allRight =  _every(this.state.imgsArrangeArr,['isInverse',false]);
                 if(allRight){
                     level +=1;
                     this.setState({
                         level:level
                     })
                 }
-
-            }else if(parseInt(item.fileName.replace(/[^0-9]/ig,""))!==first && count%2===0) {
+                this.state.fNode = "";
+                this.state.sNode = "";
+            }else if(this.state.fNode.fileName!==this.state.sNode.fileName && count % 2 === 0) {
                 console.log('点错了,让这错的图片自动翻转');
-                this.setState({
-                    count:1,
-                });
-                setTimeout(function () {
+                this.state.fNode = "";
+                this.state.sNode = "";
+
+                //imgsArrangeArr = this.state.imgsArrangeArr;
+                console.log('imgsArrangeArr[index]',this.state);
+                setTimeout(()=>{
                     console.log('点错了index',index);
-                    console.log('点错了first',first)
-                    imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;//刚才点的那张
-                    imgsArrangeArr[first].isInverse = true;//上一张
-                },300);
+                    console.log('点错了lastIndex',lastIndex);
+                    console.log('imgsArrangeArrrrrrrrr',this.state.imgsArrangeArr);
+                    this.state.imgsArrangeArr[index].isInverse = !this.state.imgsArrangeArr[index].isInverse;//刚才点的那张
+                    this.state.imgsArrangeArr[lastIndex].isInverse = false ;//上次点的那张
+                    console.log('after inverse imgsArrangeArr',imgsArrangeArr[lastIndex].isInverse)
+                },500);
 
 
             }
@@ -108,24 +126,28 @@ class App extends React.Component {
 
 
     componentWillUpdate(nextProps, nextState){
-        console.log('componentWillUpdate')
+       /* console.log('componentWillUpdate')
         console.log('nextState',nextState);
-        console.log('this.state',this.state)
-        console.log('componentWillUpdate')
+        console.log('nextProps',nextState);
+        console.log('this.state',this.state);
+        console.log('componentWillUpdate');
+        console.log('this.state.imgsArrangeArr',this.state.imgsArrangeArr)
+        console.log('componentDidUpdate');*/
 
     }
 
     inverse(index,item) {
         return function() {
             var imgsArrangeArr = this.state.imgsArrangeArr;
-            imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+            console.log('inverse',imgsArrangeArr,index);
+            this.state.imgsArrangeArr[index].isInverse = !this.state.imgsArrangeArr[index].isInverse;
             //更新视图
             this.setState({
-                imgsArrangeArr: imgsArrangeArr,
-                first:parseInt(item.fileName.replace(/[^0-9]/ig,"")),
+                imgsArrangeArr: this.state.imgsArrangeArr,
+                lastIndex:index,
                 count:this.state.count+1
             });
-            this.countSame(index,item,this.state.first,this.state.count);
+            this.countSame(index,item,this.state.lastIndex,this.state.count);
         }.bind(this);
     }
 
@@ -145,14 +167,17 @@ class App extends React.Component {
         });
     }
     componentDidMount(){
-        this.timer = setInterval(
-            ()=> this.gameOver(),
-            1000
-        )
+        //this.timer = setInterval(
+           // ()=> this.gameOver(),
+           // 1000
+       // )
+
 
 
 
         //第一局
+
+        console.log('didMount')
 
 
 
@@ -175,7 +200,9 @@ class App extends React.Component {
     //get start end  over
 
     componentWillMount(){
+/*
         console.log('componentWillUpdate')
+*/
         var  _urls = [];
 
         if(this.state.level===1){
@@ -191,7 +218,9 @@ class App extends React.Component {
     }
 
     componentWillUnmount(){
+/*
         console.log('componentWillUnmount')
+*/
 
         clearInterval(this.timer);
     }
@@ -209,33 +238,39 @@ class App extends React.Component {
 
     //偷看
     wantToSee(){
+        console.log('want to see')
         //时间到了之后，将所有的卡片翻转到背面
         var imgsArrangeArr = this.state.imgsArrangeArr;
-        for(var i=0;i<this.state.imgsArrangeArr.length;i++){
+        for(var i=0;i<imgsArrangeArr.length;i++){
+            console.log('arr',imgsArrangeArr)
             imgsArrangeArr[i].isInverse = false;
         }
+
         setTimeout(function () {
             for(var i=0;i<imgsArrangeArr.length;i++){
                 imgsArrangeArr[i].isInverse = true;
             }
-        },3000)
+        },1000)
     }
 
     //组件将接收道具
     componentWillReceiveProps(nextProps){
+/*
         console.log('componentWillReceiveProps')
+*/
     }
     shouldComponentUpdate(nextProps, newState) {
-        console.log('this.state',this.state);
+        /*console.log('this.state',this.state);
         console.log('nextState',newState)
-        console.log('shouldComponentUpdate')
+        console.log('shouldComponentUpdate')*/
         return true
     }
     //组件将更新
 
     //组件更新完毕
     componentDidUpdate(nextProps, nextState){
-        console.log('componentDidUpdate')
+
+
     }
     //组件将要卸载
 
@@ -244,11 +279,12 @@ class App extends React.Component {
 
     render(){
         var imgFigures = [];
+        console.log('random',this.state.randomUrls)
         this.state.randomUrls.forEach(function(item,index){
             if(!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index] = {
-                    rotate: 0,
                     isInverse: true,
+                    fileName:item.fileName
                 }
             }
             imgFigures.push(
