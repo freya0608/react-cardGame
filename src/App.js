@@ -98,11 +98,15 @@ class App extends React.Component {
                 var allRight =  _every(this.state.imgsArrangeArr,['isInverse',false]);
                 if(allRight){
                     setTimeout(()=>{
+                        for(var i=0;i<this.state.imgsArrangeArr.length;i++){
+                            this.state.imgsArrangeArr[i].isInverse = true;
+                        }
                         this.setState({
                             level:this.state.level+1,
-                        });
-                    },1000);
+                            imgsArrangeArr:this.state.imgsArrangeArr
 
+                        });
+                    },2000);
 
                    /* for(var i=0;i<this.state.imgsArrangeArr.length;i++){
                         this.state.imgsArrangeArr[i].isInverse = true;
