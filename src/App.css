@@ -22,7 +22,7 @@
   height: 100%;
   position:relative;
   overflow:hidden;
-  margin-top: 30px;
+  margin-top: 100px;
  }
 .stage {
   width:100%;
@@ -110,7 +110,7 @@ figcaption .img-back p {
   color:#F36E27;
   border-radius: 10px;
   height: 40px;
-  width:80px;
+  width:120px;
   font-size: 20px;
   margin:  10px auto;
   border:1px solid #F36E27;
