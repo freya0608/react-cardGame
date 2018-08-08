@@ -79,18 +79,13 @@ class App extends React.Component {
         console.log('index',index);
         console.log('lastIndex',lastIndex);
         console.log('conut',count);
-
-        this.setState({
-           // index:index,
-           // lastIndex:lastIndex,
-        });
+        
 
         if(this.state.fNode==''){
             this.state.fNode = item;
         }else {
             this.state.sNode = item
         }
-        var imgsArrangeArr = this.state.imgsArrangeArr;
             if(lastIndex===0&&count===1){
                 console.log('初始化')
             }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0){
@@ -105,21 +100,16 @@ class App extends React.Component {
                 this.state.fNode = "";
                 this.state.sNode = "";
             }else if(this.state.fNode.fileName!==this.state.sNode.fileName && count % 2 === 0) {
-                console.log('点错了,让这错的图片自动翻转');
                 this.state.fNode = "";
                 this.state.sNode = "";
-
-                //imgsArrangeArr = this.state.imgsArrangeArr;
-                console.log('imgsArrangeArr[index]',this.state);
                 setTimeout(()=>{
-                    console.log('点错了index',index);
-                    console.log('点错了lastIndex',lastIndex);
-                    console.log('imgsArrangeArrrrrrrrr',this.state.imgsArrangeArr);
                     this.state.imgsArrangeArr[index].isInverse = !this.state.imgsArrangeArr[index].isInverse;//刚才点的那张
-                    this.state.imgsArrangeArr[lastIndex].isInverse = false ;//上次点的那张
-                    console.log('after inverse imgsArrangeArr',imgsArrangeArr[lastIndex].isInverse)
-                },500);
-
+                    this.state.imgsArrangeArr[lastIndex].isInverse = true ;//上次点的那张
+                    console.log('after inverse imgsArrangeArr',this.state.imgsArrangeArr)
+                    this.setState({
+                        imgsArrangeArr:this.state.imgsArrangeArr,
+                    })
+                },1000);
 
             }
     }
