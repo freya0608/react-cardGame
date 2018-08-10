@@ -1,0 +1,16 @@
+.progress-text{
+    color: #333;
+    height: 30px;
+    line-height: 30px;
+    padding:20px ;
+  }
+  .progress-bar{
+    margin: 10px 20px;
+    width: 300px;
+  }
+  .progress-content{
+    height:20px;
+    border-radius: 10px;
+    background:red;
+    width:300px;
+  }
