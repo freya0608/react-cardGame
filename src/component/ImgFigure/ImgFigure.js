@@ -92,7 +92,9 @@ class ImgFigureSection extends React.Component {
                             imgsArrangeArr:imgsArrangeArr
                         },()=>{
                             if(this.props.setLevel){
-                                this.props.setLevel(this.state.level)
+                                setTimeout(()=>{
+                                    this.props.setLevel(this.state.level)
+                                },1000)
                             }
                         });
                     },2000);
