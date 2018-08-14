@@ -3,6 +3,8 @@ import './App.css';
 import bg from './bg.png'
 import ImgFigureSection from './component/ImgFigure/ImgFigure'
 import Timer from './component/Timer/Timer'
+import {Line} from 'rc-progress'
+
 var time=100;
 let imgDatas = require('./imageDatas');
 function getImgURL(imgDateArray) {
@@ -49,6 +51,27 @@ class App extends React.Component {
         console.log('new setLvel',level)
     }
 
+    gameOver(){
+        time -= 25;
+        console.log(time)
+        if(this.state.percent==0){
+            clearInterval(this.timer);
+            return
+        }
+        this.setState({
+            percent:time,
+        });
+    }
+    componentDidMount(){
+        this.timer = setInterval(
+            ()=> this.gameOver(),
+            1000
+        )
+    }
+    componentWillUnmount(){
+        clearInterval(this.timer);
+    }
+
 
     //组件将要卸载
     render(){
@@ -76,6 +99,11 @@ class App extends React.Component {
         };
         return (
             <div style={bgStyle}>
+
+            <section className="progress">
+                    <div>剩余时间</div>
+                    <Line percent={this.state.percent} strokeWidth="3" strokeColor="red" />
+                </section>
                 <section className="stage">
                     <section>
                         <ImgFigureSection 
@@ -85,6 +113,7 @@ class App extends React.Component {
                         randomUrls = {randomUrls} />
                     </section>
                 </section>
+
             </div>
         )
     }
