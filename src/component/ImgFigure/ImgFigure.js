@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React from "react";
 import back from '../../back.jpg'
 import './imgFigure.css'
 import _every from 'lodash/every'
@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 class ImgFigureSection extends React.Component {
     static propTypes = {
         setLevel:PropTypes.func,
-        randomUrls:PropTypes.array
+        randomUrls:PropTypes.array,
+        level:PropTypes.number,
     }
     constructor(props){
         super(props);
@@ -21,6 +22,7 @@ class ImgFigureSection extends React.Component {
             sNode:"",
             count:1,
             level:1,
+            isClickable:true
         };
         this.countSame = this.countSame.bind(this);
         this.wantToSee = this.wantToSee.bind(this);
@@ -39,14 +41,15 @@ class ImgFigureSection extends React.Component {
         }.bind(this);
     }
     componentDidMount(){
-        console.log('didmount',this.state)
-        
+        //console.log('didmount',this.state)
+    
+
     }
     wantToSee(){
         //时间到了之后，将所有的卡片翻转到背面
         for(var i=0;i<this.state.imgsArrangeArr.length;i++){
             this.state.imgsArrangeArr[i].isInverse = false;
-            console.log('arr',this.state.imgsArrangeArr)
+            //console.log('arr',this.state.imgsArrangeArr)
 
         }
         this.setState({
@@ -74,13 +77,13 @@ class ImgFigureSection extends React.Component {
                  console.log('初始化')
  */
              }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0){
-                 /*console.log('恭喜您，点对了');
-                 console.log('都对了，看看state',this.state.imgsArrangeArr);*/
-                 console.log('count same ',count)
+                 console.log('恭喜您，点对了');
+                 console.log('都对了，看看state',this.state.imgsArrangeArr);
+                // console.log('count same ',count)
  
                  var allRight =  _every(this.state.imgsArrangeArr,['isInverse',false]);
                  if(allRight){
-                     console.log('all right')
+                    // console.log('all right')
                     setTimeout(()=>{
                         var imgsArrangeArr = this.state.imgsArrangeArr
                         for(var i=0;i<imgsArrangeArr.length;i++){
@@ -101,10 +104,13 @@ class ImgFigureSection extends React.Component {
                  }
                  this.state.fNode = "";
                  this.state.sNode = "";
-                 console.log('countsame',this.state.level)
+                // console.log('countsame',this.state.level)
              }else if(this.state.fNode.fileName!==this.state.sNode.fileName && count % 2 === 0) {
                  this.state.fNode = "";
                  this.state.sNode = "";
+                 this.setState({
+                    isClickable:false
+                 })
                  setTimeout(()=>{
                      this.state.imgsArrangeArr[index].isInverse = !this.state.imgsArrangeArr[index].isInverse;//刚才点的那张
                      this.state.imgsArrangeArr[lastIndex].isInverse = true ;//上次点的那张
@@ -112,6 +118,11 @@ class ImgFigureSection extends React.Component {
                          imgsArrangeArr:this.state.imgsArrangeArr,
                      })
                  },1000);
+                 setTimeout(()=>{
+                     this.setState({
+                        isClickable:true
+                     })
+                 },1000)
              }
      }
  
@@ -138,6 +149,7 @@ class ImgFigureSection extends React.Component {
                     inverse={this.inverse(index,item)}
                     arrange={this.state.imgsArrangeArr[index]}
                     ref={'imgFigure' + index}
+                    isClickable = {this.state.isClickable}
                     key = {index}/>)
         }.bind(this));
         return (
@@ -160,8 +172,11 @@ class SingleImg extends React.Component{
     constructor(props){
         super(props);
         this.handleClick = this.handleClick.bind(this);
+       
     }
     handleClick(e){
+        console.log('click',this.props.isClickable)
+
         this.props.inverse();
         e.preventDefault();
         e.stopPropagation();
@@ -171,15 +186,22 @@ class SingleImg extends React.Component{
        const {imgData} = this.props;
         var imgFigureClassName = 'img-figure';
         imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';
+        console.log('render isClickable',this.props.isClickable)
+        var imgFront = this.props.isClickable?'':'isClickable'
+
+        var imgBack = 'img-back';
+        imgBack += !this.props.isClickable ? ' isClickable':''
+    
 
         return (
-            <figure  className={imgFigureClassName}  onClick={this.handleClick}>
-                <img onClick={this.handleClick} src={imgData.imageURL} alt={imgData.title}/>
+            <figure  className={imgFigureClassName} >
+                <img className={imgFront}  onClick={this.handleClick} src={imgData.imageURL} alt={imgData.title}/>
                 <figcaption>
-                    <div className="img-back" onClick={this.handleClick}>
+                    <div className={imgBack} id="imgBack"   onClick={this.handleClick}>
                         <img src={back} alt="背面图片"/>
                     </div>
                 </figcaption>
+        
             </figure>
 
         );

@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import bg from './bg.png'
 import ImgFigureSection from './component/ImgFigure/ImgFigure'
 import Timer from './component/Timer/Timer'
-import {Line} from 'rc-progress'
 
-var time=100;
 let imgDatas = require('./imageDatas');
 function getImgURL(imgDateArray) {
     for(var i=0;i<imgDateArray.length;i++){
@@ -18,8 +16,6 @@ function getImgURL(imgDateArray) {
 
 var urls = getImgURL(imgDatas);
 var randomUrls = [];
-var level=1;
-var _level = 1
 
 class App extends React.Component {
 
@@ -31,7 +27,7 @@ class App extends React.Component {
             level:1,
         };        
         this.spreadImg = this.spreadImg.bind(this);
-        console.log('construcetor',this.state)
+       // console.log('construcetor',this.state)
 
     }
     
@@ -43,52 +39,36 @@ class App extends React.Component {
         var whole  = urls.concat(urls);
         return this.random(whole)
     }
-     setLevel(level){
-        console.log('setLvel',level)
+    setLevel(level){
         this.setState({
             level
         })
-        console.log('new setLvel',level)
+    }
+    setPercent(percent){
+        console.log('setpercent',percent)
+        this.setState({
+            percent
+        })
     }
 
-    gameOver(){
-        time -= 25;
-        console.log(time)
-        if(this.state.percent==0){
-            clearInterval(this.timer);
-            return
-        }
-        this.setState({
-            percent:time,
-        });
-    }
-    componentDidMount(){
-        this.timer = setInterval(
-            ()=> this.gameOver(),
-            1000
-        )
-    }
-    componentWillUnmount(){
-        clearInterval(this.timer);
-    }
 
 
     //组件将要卸载
     render(){
-        console.log('level parent ',this.state.level)
+        // console.log('level parent ',this.state.level)
 
         if(this.state.level===1){
           var  _urls = urls.slice(0,4);
-            randomUrls =   this.spreadImg(_urls)
+            randomUrls =  this.spreadImg(_urls)
         }
         
         if(this.state.level===2){
               _urls = urls.slice(0,6);
-              randomUrls =   this.spreadImg(_urls);
+              randomUrls =  this.spreadImg(_urls);
         }
         if(this.state.level===3){
             _urls = urls.slice(0,8);
-            randomUrls =   this.spreadImg(_urls);
+            randomUrls =  this.spreadImg(_urls);
       }
 
         var bgStyle = {
@@ -97,17 +77,15 @@ class App extends React.Component {
             height:'100vh',
             backgroundSize:'contain'
         };
+
         return (
             <div style={bgStyle}>
-
-            <section className="progress">
-                    <div>剩余时间</div>
-                    <Line percent={this.state.percent} strokeWidth="3" strokeColor="red" />
+               <section className="progress">
+                    <Timer setPercent = {percent => this.setPercent(percent)}/>
                 </section>
                 <section className="stage">
                     <section>
-                        <ImgFigureSection 
-                        
+                        <ImgFigureSection                       
                         setLevel = { level => this.setLevel(level) } 
                         level={this.state.level} 
                         randomUrls = {randomUrls} />

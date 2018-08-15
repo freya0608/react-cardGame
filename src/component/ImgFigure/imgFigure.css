@@ -1,10 +1,13 @@
 .is-inverse{
-    background-color: #555;
+    background-color: #fff;
     transform: rotateY(180deg);
+  }
+  .isClickable{
+    pointer-events: none;
   }
   .img-figure {
     width: 25%;
-    height: 25%;
+    height:120px;
     margin: 0;
     box-sizing: border-box;
     background: #fff;
