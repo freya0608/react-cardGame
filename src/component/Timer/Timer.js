@@ -21,13 +21,8 @@ class Timer extends React.Component {
         this.state = {
             percent:100
         }
-        this.dom = React.createRef()
-        //this.handleClick = this.handleClick.bind(this);
     }
 
-    
-
-    
     gameOver(){
         time -= 2.5;
         //console.log(time)
