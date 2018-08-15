@@ -112,17 +112,18 @@ class ImgFigureSection extends React.Component {
                     isClickable:false
                  })
                  setTimeout(()=>{
+                    this.setState({
+                       isClickable:true
+                    })
+                },2000)
+                 setTimeout(()=>{
                      this.state.imgsArrangeArr[index].isInverse = !this.state.imgsArrangeArr[index].isInverse;//刚才点的那张
                      this.state.imgsArrangeArr[lastIndex].isInverse = true ;//上次点的那张
                      this.setState({
                          imgsArrangeArr:this.state.imgsArrangeArr,
                      })
                  },1000);
-                 setTimeout(()=>{
-                     this.setState({
-                        isClickable:true
-                     })
-                 },1000)
+                 
              }
      }
  
@@ -175,7 +176,8 @@ class SingleImg extends React.Component{
        
     }
     handleClick(e){
-        console.log('click',this.props.isClickable)
+        console.log('click',this.props.isClickable);
+        console.log('clicked   ')
 
         this.props.inverse();
         e.preventDefault();
@@ -187,7 +189,7 @@ class SingleImg extends React.Component{
         var imgFigureClassName = 'img-figure';
         imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';
         console.log('render isClickable',this.props.isClickable)
-        var imgFront = this.props.isClickable?'':'isClickable'
+        var imgFront = this.props.isClickable ? '' : 'isClickable'
 
         var imgBack = 'img-back';
         imgBack += !this.props.isClickable ? ' isClickable':''
