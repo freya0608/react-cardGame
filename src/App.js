@@ -30,6 +30,8 @@ class App extends React.Component {
        // console.log('construcetor',this.state)
 
     }
+
+
     
     random(urls){
         return urls.sort(function (a,b){ return Math.random() >0.5 });
@@ -45,7 +47,11 @@ class App extends React.Component {
         })
     }
     setPercent(percent){
-        console.log('setpercent',percent)
+        console.log('setpercent',percent);
+        console.log('app level',this.state.level)
+        if(percent<1){
+            console.log('游戏结束')
+        }
         this.setState({
             percent
         })
@@ -55,11 +61,11 @@ class App extends React.Component {
 
     //组件将要卸载
     render(){
-        // console.log('level parent ',this.state.level)
+         console.log('render level parent ',this.state.level)
 
         if(this.state.level===1){
           var  _urls = urls.slice(0,4);
-            randomUrls =  this.spreadImg(_urls)
+            randomUrls =  this.spreadImg(_urls);
         }
         
         if(this.state.level===2){
@@ -81,7 +87,9 @@ class App extends React.Component {
         return (
             <div style={bgStyle}>
                <section className="progress">
-                    <Timer setPercent = {percent => this.setPercent(percent)}/>
+                    <Timer percent={this.state.percent}
+                          level={this.state.level} 
+                    />
                 </section>
                 <section className="stage">
                     <section>

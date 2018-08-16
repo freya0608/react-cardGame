@@ -22,7 +22,9 @@ class ImgFigureSection extends React.Component {
             sNode:"",
             count:1,
             level:1,
-            isClickable:true
+            isClickable:true,
+            sindex:-1,
+            findex:-1
         };
         this.countSame = this.countSame.bind(this);
         this.wantToSee = this.wantToSee.bind(this);
@@ -67,16 +69,31 @@ class ImgFigureSection extends React.Component {
     }
 
     countSame(index,item,lastIndex,count){
+        console.log('item',item);
+        console.log('index',index)
+
+
+        var stash = [];
+        if(!stash){
+            stash.push(item)
+        }
+
          if(this.state.fNode ===''){
              this.state.fNode = item;
+             this.state.findex = index
          }else {
-             this.state.sNode = item
+             this.state.sNode = item;
+             this.state.sindex = index
          }
+         console.log('fNode',this.state.fNode)
+         console.log('snode',this.state.sNode)
+         console.log('findex',this.state.findex)
+         console.log('sindex',this.state.sindex)
              if(lastIndex===0&&count===1){
  /*
                  console.log('初始化')
  */
-             }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0){
+             }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0 && this.state.findex !== this.state.sindex){
                  console.log('恭喜您，点对了');
                  console.log('都对了，看看state',this.state.imgsArrangeArr);
                 // console.log('count same ',count)
@@ -104,10 +121,16 @@ class ImgFigureSection extends React.Component {
                  }
                  this.state.fNode = "";
                  this.state.sNode = "";
+                 this.state.findex = -1;
+                 this.state.sNode = -1;
+                 console.log('fNode',this.state.fNode)
+         console.log('snode',this.state.sNode)
                 // console.log('countsame',this.state.level)
              }else if(this.state.fNode.fileName!==this.state.sNode.fileName && count % 2 === 0) {
                  this.state.fNode = "";
                  this.state.sNode = "";
+                 this.state.findex = -1;
+                 this.state.sNode = -1;
                  this.setState({
                     isClickable:false
                  })
@@ -124,6 +147,9 @@ class ImgFigureSection extends React.Component {
                      })
                  },1000);
                  
+             }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0 && this.state.findex === this.state.sindex){
+                 console.log('点了同一张图片')
+
              }
      }
  

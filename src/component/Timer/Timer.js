@@ -9,33 +9,44 @@ import './timer.css'
 
 import PropTypes from 'prop-types';
 
-var time=100;
+// var time=99;
 class Timer extends React.Component {
     static defaultProps = {
-        setPercent:PropTypes.func
+        setPercent:PropTypes.func,
+        percent:PropTypes.percent,
     }
     static propTypes = {}
 
     constructor(props) {
         super(props)
         this.state = {
-            percent:100
+            percent:99,
         }
     }
 
     gameOver(){
-        time -= 2.5;
-        //console.log(time)
-        if(this.state.percent===0){
-            this.props.setPercent(this.state.percent)
+        // time -= 3.3;
+        //console.log('game over time',time)
+        console.log('game over percent',this.state.percent);
+        console.log('game over level',this.props.level)
+        //var time30 = time+3.3;
+
+        if(this.state.percent<1){
+            this.setState({
+                percent:0
+            })
+            this.props.setPercent(this.state.percent);
             clearInterval(this.timer);
             return
         }
+       
         this.setState({
-            percent:time,
+            percent:this.state.percent-1,
         });
     }
     componentDidMount(){
+    
+        console.log('didicomponent',this.state.percent)
         this.timer = setInterval(
             ()=> this.gameOver(),
             1000
