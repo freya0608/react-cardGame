@@ -35,17 +35,20 @@ class Timer extends React.Component {
             this.setState({
                 percent:0
             })
-            this.props.setPercent(this.state.percent);
             clearInterval(this.timer);
             return
         }
-       
+        if(this.props.level===2){
+            this.setState({
+                percent:this.state.percent + 30
+            })
+        }
+         
         this.setState({
             percent:this.state.percent-1,
         });
     }
     componentDidMount(){
-    
         console.log('didicomponent',this.state.percent)
         this.timer = setInterval(
             ()=> this.gameOver(),
@@ -59,6 +62,8 @@ class Timer extends React.Component {
 
     
     render() {
+
+
         return (
             <div ref={this.dom}>
             <section className="progress">
