@@ -25,13 +25,10 @@ class App extends React.Component {
             percent:100,
             layer:false,
             level:1,
+            isgameover:false
         };        
         this.spreadImg = this.spreadImg.bind(this);
-       // console.log('construcetor',this.state)
-
     }
-
-
     
     random(urls){
         return urls.sort(function (a,b){ return Math.random() >0.5 });
@@ -51,6 +48,10 @@ class App extends React.Component {
         console.log('app level',this.state.level)
         if(percent<1){
             console.log('游戏结束')
+
+            this.setState({
+                isgameover:true
+            })
         }
         this.setState({
             percent
@@ -61,7 +62,6 @@ class App extends React.Component {
 
     //组件将要卸载
     render(){
-         console.log('render level parent ',this.state.level)
 
         if(this.state.level===1){
           var  _urls = urls.slice(0,4);
@@ -86,9 +86,11 @@ class App extends React.Component {
 
         return (
             <div style={bgStyle}>
+             <div>
                <section className="progress">
                     <Timer percent={this.state.percent}
                           level={this.state.level} 
+                          setPercent = { percent => this.setPercent(percent) }
                     />
                 </section>
                 <section className="stage">
@@ -99,7 +101,13 @@ class App extends React.Component {
                         randomUrls = {randomUrls} />
                     </section>
                 </section>
-
+             </div>
+             {
+                 this.state.isgameover&&
+                 <div className = "gameover">
+                    <p className="gameover-text">游戏结束</p>
+                 </div>
+             }
             </div>
         )
     }

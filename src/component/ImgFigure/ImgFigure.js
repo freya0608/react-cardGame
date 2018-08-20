@@ -42,11 +42,7 @@ class ImgFigureSection extends React.Component {
             this.countSame(index,item,this.state.lastIndex,this.state.count);
         }.bind(this);
     }
-    componentDidMount(){
-        //console.log('didmount',this.state)
-    
 
-    }
     wantToSee(){
         //时间到了之后，将所有的卡片翻转到背面
         for(var i=0;i<this.state.imgsArrangeArr.length;i++){
@@ -100,7 +96,6 @@ class ImgFigureSection extends React.Component {
  
                  var allRight =  _every(this.state.imgsArrangeArr,['isInverse',false]);
                  if(allRight){
-                    // console.log('all right')
                     setTimeout(()=>{
                         var imgsArrangeArr = this.state.imgsArrangeArr
                         for(var i=0;i<imgsArrangeArr.length;i++){
@@ -123,9 +118,6 @@ class ImgFigureSection extends React.Component {
                  this.state.sNode = "";
                  this.state.findex = -1;
                  this.state.sNode = -1;
-                 console.log('fNode',this.state.fNode)
-         console.log('snode',this.state.sNode)
-                // console.log('countsame',this.state.level)
              }else if(this.state.fNode.fileName!==this.state.sNode.fileName && count % 2 === 0) {
                  this.state.fNode = "";
                  this.state.sNode = "";
@@ -148,8 +140,7 @@ class ImgFigureSection extends React.Component {
                  },1000);
                  
              }else if(this.state.fNode.fileName===this.state.sNode.fileName && count % 2 === 0 && this.state.findex === this.state.sindex){
-                 console.log('点了同一张图片')
-
+                // console.log('点了同一张图片')
              }
      }
  
@@ -159,8 +150,6 @@ class ImgFigureSection extends React.Component {
     
     
         var imgFigures = [];
-        //console.log('chhhhrann',randomUrls);
-        //console.log('this.props',this.props)
 
         randomUrls.forEach(function(item,index){
             if(!this.state.imgsArrangeArr[index]){

@@ -1,8 +1,4 @@
-/**
- * Created by miguel on 18/8/8.
- * https://www.jetbrains.com/help/webstorm/file-template-variables.html
- 动画callback只支持1.x版本的TransitionGroup
- */
+
 import React from 'react';
 import {Line} from 'rc-progress'
 import './timer.css'
@@ -20,27 +16,25 @@ class Timer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            percent:99,
+            percent:100,
         }
     }
 
     gameOver(){
-        // time -= 3.3;
-        //console.log('game over time',time)
         console.log('game over percent',this.state.percent);
         console.log('game over level',this.props.level)
-        //var time30 = time+3.3;
 
         if(this.state.percent<1){
             this.setState({
                 percent:0
             })
+            this.props.setPercent(0)
             clearInterval(this.timer);
             return
         }
         if(this.props.level===2){
             this.setState({
-                percent:this.state.percent + 30
+               // percent:this.state.percent + 30
             })
         }
          
@@ -59,19 +53,17 @@ class Timer extends React.Component {
         clearInterval(this.timer);
     }
 
-
-    
     render() {
 
 
         return (
             <div ref={this.dom}>
             <section className="progress">
-                        <div className="progress-text">剩余时间</div>
-                        <div className="progress-bar">
-                            <Line percent={this.state.percent} strokeWidth="2" strokeColor="red" />
-                        </div>
-                    </section>
+                <div className="progress-text">剩余时间</div>
+                <div className="progress-bar">
+                    <Line percent={this.state.percent} strokeWidth="2" strokeColor="red" />
+                </div>
+            </section>
             
             </div>
         );
